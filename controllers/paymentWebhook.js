@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
 
   // 🎯 Handle events
   switch (event.type) {
-
+ 
     case 'payment_intent.succeeded': {
       const paymentIntent = event.data.object;
 
