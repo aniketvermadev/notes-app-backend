@@ -7,10 +7,13 @@ const { Server } = require('socket.io');
 const app = express();
 const server = http.createServer(app);
 
+const FRONTEND_URL = 'https://notes-app-frontend-swart-two.vercel.app';
+
 const io = new Server(server, {
   cors: {
-    origin: 'https://notes-app-frontend-swart-two.vercel.app/',
+    origin: FRONTEND_URL,
     methods: ['GET', 'POST'],
+    credentials: true,
   },
 });
 
@@ -23,7 +26,11 @@ app.post(
   require('./controllers/paymentWebhook')
 );
 
-app.use(cors());
+app.use(cors({
+  origin: FRONTEND_URL,
+  credentials: true,
+}));
+
 app.use(express.json());
 
 app.use('/api/auth', require('./routes/authRoutes'));
