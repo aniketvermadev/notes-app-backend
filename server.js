@@ -70,6 +70,22 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('typing', ({ sender, receiver }) => {
+    const roomId = getRoomId(sender, receiver);
+
+    socket.to(roomId).emit('typing', {
+      sender,
+    });
+  });
+
+  socket.on('stop_typing', ({ sender, receiver }) => {
+    const roomId = getRoomId(sender, receiver);
+
+    socket.to(roomId).emit('stop_typing', {
+      sender,
+    });
+  });
+
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);
   });
